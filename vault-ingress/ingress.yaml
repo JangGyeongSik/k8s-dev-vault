@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-vault-server
+  namespace: vault
+  annotations:
+    networking.gke.io/managed-certificates: MCRT_NAME 
+    networking.gke.io/v1beta1.FrontendConfig: FRONTEND_CONFIG_NAME  
+    kubernetes.io/ingress.allow-http: "true"    
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.global-static-ip-name: GCE_EXTERNAL_IP_ADDRESS
+spec:
+  rules:
+  - host: VAULT_DOMAIN
+    http:
+      paths:
+      - backend:
+          service:
+            name: vault-ui
+            port:
+              number: 8200
+        path: "/"
+        #pathType: ImplementationSpecific
+        pathType: Prefix

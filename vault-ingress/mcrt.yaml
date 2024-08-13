@@ -1,0 +1,8 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: mcrt-vault-system
+  namespace: vault 
+spec:
+  domains:
+    - VAULT_DOMAIN

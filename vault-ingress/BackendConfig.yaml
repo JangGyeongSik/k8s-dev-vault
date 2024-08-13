@@ -1,0 +1,22 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: backendconfig-vault-server
+  namespace: vault
+spec:
+  securityPolicy:
+    name: CLOUD_ARMOR_POLICY
+  healthCheck:
+    checkIntervalSec: 30
+    healthyThreshold: 1
+    timeoutSec: 5
+    type: HTTP 
+    unhealthyThreshold: 2
+    port: 8200
+    requestPath: "/v1/sys/health?standbyok=true"
+  logging:
+    enable: true
+    sampleRate: 1
+  sessionAffinity:
+    affinityType: CLIENT_IP
+  timeoutSec: 3600
